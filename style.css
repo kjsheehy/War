@@ -1,0 +1,63 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: content-box;
+  background-color: green;
+}
+
+main {
+  position: relative;
+  /*width: 100rem;
+  height: 60rem;*/
+  padding: 2em;
+}
+
+.info {
+    width: auto;
+}
+
+.title {
+  text-align: center;
+}
+
+.game {
+  display: flex;
+}
+
+.names {
+  display: flex;
+  align
+}
+
+.scores {
+  display: flex;
+}
+
+#player-name {
+  text-align: left;
+  width: 50%;
+}
+
+#computer-name {
+  text-align: right;
+  width: 50%;
+}
+
+#player-score {
+    text-align: left;
+    width: 50%
+}
+
+#computer-score {
+    text-align: right;
+    width: 50%;
+}
+
+
+.player .battle {
+  padding: 2em;
+}

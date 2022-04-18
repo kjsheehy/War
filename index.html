@@ -11,19 +11,32 @@
   </head>
   <body>
     <main>
-      <section class="player">
-        <h2 class="name" id="player-name">Player</h2>
-        <p class="score" id="player-score">26 cards</p>
-        <div class="deck" id="player-deck"></div>
-      </section>
-      <section class="battle">
-        <div class="card-played" id="player-card-played"></div>
-        <div class="card-played" id="computer-card-played"></div>
-      </section>
-      <section class="computer">
-        <h2 class="name" id="computer-name">Player</h2>
-        <p class="score" id="computer-score">26 cards</p>
-        <div class="deck" id="computer-deck"></div>
+      <h1 class="title">War</h1>
+      <div class="info">
+        <div class="names">
+          <h2 class="name" id="player-name">Player</h2>
+          <h2 class="name" id="computer-name">Computer</h2>
+        </div>
+        <div class="scores">
+          <p class="score" id="player-score">26 cards</p>
+          <p class="score" id="computer-score">26 cards</p>
+        </div>
+      </div>
+      <section class="game">
+        <section class="player">
+          <img class="deck" id="player-deck" src="Assets/cardback.png" />
+        </section>
+        <section class="battle">
+          <img
+            class="card-played"
+            id="player-card-played"
+            src="Assets/card_10Clubs.png"
+          />
+          <div class="card-played" id="computer-card-played"></div>
+        </section>
+        <section class="player">
+          <img class="deck" id="computer-deck" src="Assets/cardback.png" />
+        </section>
       </section>
 
       <button class="button-new">🔄 New game</button>
