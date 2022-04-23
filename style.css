@@ -1,7 +1,7 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 html {
@@ -9,55 +9,49 @@ html {
   background-color: green;
 }
 
-main {
-  position: relative;
-  /*width: 100rem;
-  height: 60rem;*/
-  padding: 2em;
+body {
+  display: flex;
+  justify-content: center;
 }
 
-.info {
-    width: auto;
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 1000px;
 }
 
 .title {
-  text-align: center;
+  margin-top: 20px;
+  font-size: 60px;
+}
+
+.info {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .game {
   display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.names {
+.battle {
+  border: 5px;
+  border-color: black;
+  border-style: double;
+  padding: 10px;
+  margin: 30px;
+  width: 55%;
+
+  justify-content: space-between;
   display: flex;
-  align
 }
 
-.scores {
-  display: flex;
-}
-
-#player-name {
-  text-align: left;
-  width: 50%;
-}
-
-#computer-name {
-  text-align: right;
-  width: 50%;
-}
-
-#player-score {
-    text-align: left;
-    width: 50%
-}
-
-#computer-score {
-    text-align: right;
-    width: 50%;
-}
-
-
-.player .battle {
-  padding: 2em;
+.button-new {
+  margin-top: 30px;
 }

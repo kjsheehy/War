@@ -10,37 +10,39 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <main>
+    <div class="container">
       <h1 class="title">War</h1>
-      <div class="info">
-        <div class="names">
-          <h2 class="name" id="player-name">Player</h2>
-          <h2 class="name" id="computer-name">Computer</h2>
-        </div>
-        <div class="scores">
-          <p class="score" id="player-score">26 cards</p>
-          <p class="score" id="computer-score">26 cards</p>
-        </div>
-      </div>
-      <section class="game">
-        <section class="player">
+      <div class="game">
+        <div class="side" id="player-side">
+          <div class="info" id="player-info">
+            <h2 class="name" id="player-name">Player</h2>
+            <p class="score" id="player-score">26 cards</p>
+          </div>
           <img class="deck" id="player-deck" src="Assets/cardback.png" />
-        </section>
-        <section class="battle">
+        </div>
+        <div class="battle">
           <img
             class="card-played"
             id="player-card-played"
             src="Assets/card_10Clubs.png"
           />
-          <div class="card-played" id="computer-card-played"></div>
-        </section>
-        <section class="player">
+          <img
+            class="card-played"
+            id="computer-card-played"
+            src="Assets/card_11Clubs.png"
+          />
+        </div>
+        <div class="side" id="computer-side">
+          <div class="info" id="computer-info">
+            <h2 class="name" id="computer-name">Computer</h2>
+            <p class="score" id="computer-score">26 cards</p>
+          </div>
           <img class="deck" id="computer-deck" src="Assets/cardback.png" />
-        </section>
-      </section>
+        </div>
+      </div>
 
       <button class="button-new">🔄 New game</button>
-    </main>
+    </div>
     <script src="script.js"></script>
   </body>
 </html>
