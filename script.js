@@ -2,6 +2,10 @@
 
 let player1Deck, player2Deck;
 
+// Elements
+const player1CardEl = document.getElementById("player1-card-played");
+const player2CardEl = document.getElementById("player2-card-played");
+
 const deal = function () {
   // Create standard deck as array of card objects
   let cards = [];
@@ -36,12 +40,8 @@ const draw = function () {
   player2Card = player2Deck.pop();
 
   // Display each player's drawn card
-  document.getElementById("player1-card-played").src = `Assets/card_${
-    player1Card.value + player1Card.suit
-  }.png`;
-  document.getElementById("player2-card-played").src = `Assets/card_${
-    player2Card.value + player2Card.suit
-  }.png`;
+  player1CardEl.src = `Assets/card_${player1Card.value + player1Card.suit}.png`;
+  player2CardEl.src = `Assets/card_${player2Card.value + player2Card.suit}.png`;
 
   compare();
 };
@@ -53,8 +53,10 @@ document.getElementById("player2-deck").addEventListener("click", draw);
 const compare = function () {
   if (player1Card.value > player2Card.value) {
     console.log("Player 1 wins the battle");
+    player1CardEl.classList.add("winning-card");
   } else if (player1Card.value < player2Card.value) {
     console.log("Player 2 wins the battle");
+    player2CardEl.classList.add("winning-card");
   } else {
     console.log("The battle is a tie");
   }
