@@ -26,3 +26,19 @@ const deal = function () {
 };
 
 deal();
+
+let player1Card, player2Card;
+
+const draw = function () {
+  player1Card = player1Deck.pop();
+  player2Card = player2Deck.pop();
+
+  document.getElementById("player1-card-played").src = `Assets/card_${
+    player1Card.value + player1Card.suit
+  }.png`;
+  document.getElementById("player2-card-played").src = `Assets/card_${
+    player2Card.value + player2Card.suit
+  }.png`;
+};
+
+document.querySelector(".deck").addEventListener("click", draw);
