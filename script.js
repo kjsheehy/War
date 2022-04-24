@@ -1,10 +1,12 @@
 "use strict";
 
-let player1Deck, player2Deck;
+let player1Deck, player2Deck, gameWinner;
 
 // Elements
 const player1CardEl = document.getElementById("player1-card-played");
 const player2CardEl = document.getElementById("player2-card-played");
+const player1scoreEl = document.getElementById("player1-score");
+const player2scoreEl = document.getElementById("player2-score");
 
 const deal = function () {
   // Create standard deck as array of card objects
@@ -35,6 +37,10 @@ let player1Card, player2Card;
 
 // Draw the top card from each player's deck
 const draw = function () {
+  // Remove winning card styling class
+  player1CardEl.classList.remove("winning-card");
+  player2CardEl.classList.remove("winning-card");
+
   // Take the last (top) card from each player's deck
   player1Card = player1Deck.pop();
   player2Card = player2Deck.pop();
@@ -72,4 +78,19 @@ const compare = function () {
     player1Deck.unshift(player1Card);
     player2Deck.unshift(player2Card);
   }
+
+  // Check for game winner (the other player has no cards left)
+  if (player2Deck.length < 21) {
+    gameWinner = 1;
+    // Call a function to end the game and declare a winner
+    console.log("Player 1 wins!");
+  } else if (player1Deck.length < 21) {
+    gameWinner = 2;
+    // Call a function to end the game and declare a winner
+    console.log("Player 2 wins!");
+  }
+
+  // Update player scores (number of elements in their deck array)
+  player1scoreEl.textContent = `${player1Deck.length} cards`;
+  player2scoreEl.textContent = `${player2Deck.length} cards`;
 };
