@@ -49,15 +49,27 @@ const draw = function () {
 document.getElementById("player1-deck").addEventListener("click", draw);
 document.getElementById("player2-deck").addEventListener("click", draw);
 
-// Compare the drawn cards and award both cards to the winner if applicable
+// Compare the drawn cards, declare a winner if applicable, and put the cards in the appropriate deck(s)
 const compare = function () {
   if (player1Card.value > player2Card.value) {
-    console.log("Player 1 wins the battle");
+    //console.log("Player 1 wins the battle");
     player1CardEl.classList.add("winning-card");
+
+    // Add both cards to player 1's deck
+    player1Deck.unshift(player2Card, player1Card);
+    //console.log(player1Deck);
   } else if (player1Card.value < player2Card.value) {
-    console.log("Player 2 wins the battle");
+    //console.log("Player 2 wins the battle");
     player2CardEl.classList.add("winning-card");
+
+    // Add both cards to player 2's deck
+    player2Deck.unshift(player1Card, player2Card);
+    //console.log(player2Deck);
   } else {
-    console.log("The battle is a tie");
+    //console.log("The battle is a tie");
+
+    // For now, just put the cards back in each player's deck. Will add in the war logic later (probably with a modal).
+    player1Deck.unshift(player1Card);
+    player2Deck.unshift(player2Card);
   }
 };
