@@ -30,9 +30,11 @@ deal();
 let player1Card, player2Card;
 
 const draw = function () {
+  // Take the last (top) card from each player's deck
   player1Card = player1Deck.pop();
   player2Card = player2Deck.pop();
 
+  // Display each player's drawn card
   document.getElementById("player1-card-played").src = `Assets/card_${
     player1Card.value + player1Card.suit
   }.png`;
@@ -41,4 +43,5 @@ const draw = function () {
   }.png`;
 };
 
-document.querySelector(".deck").addEventListener("click", draw);
+document.getElementById("player1-deck").addEventListener("click", draw);
+document.getElementById("player2-deck").addEventListener("click", draw);
