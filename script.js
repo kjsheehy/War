@@ -29,6 +29,7 @@ deal();
 
 let player1Card, player2Card;
 
+// Draw the top card from each player's deck
 const draw = function () {
   // Take the last (top) card from each player's deck
   player1Card = player1Deck.pop();
@@ -41,7 +42,20 @@ const draw = function () {
   document.getElementById("player2-card-played").src = `Assets/card_${
     player2Card.value + player2Card.suit
   }.png`;
+
+  compare();
 };
 
 document.getElementById("player1-deck").addEventListener("click", draw);
 document.getElementById("player2-deck").addEventListener("click", draw);
+
+// Compare the drawn cards and award both cards to the winner if applicable
+const compare = function () {
+  if (player1Card.value > player2Card.value) {
+    console.log("Player 1 wins the battle");
+  } else if (player1Card.value < player2Card.value) {
+    console.log("Player 2 wins the battle");
+  } else {
+    console.log("The battle is a tie");
+  }
+};
