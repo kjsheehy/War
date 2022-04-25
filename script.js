@@ -7,6 +7,8 @@ const player1CardEl = document.getElementById("player1-card-played");
 const player2CardEl = document.getElementById("player2-card-played");
 const player1scoreEl = document.getElementById("player1-score");
 const player2scoreEl = document.getElementById("player2-score");
+const modalEl = document.querySelector(".modal");
+const winnerEl = document.querySelector(".winner");
 
 const deal = function () {
   // Create standard deck as array of card objects
@@ -29,6 +31,16 @@ const deal = function () {
   // Split deck array between the 2 players
   player1Deck = cards.splice(0, 26);
   player2Deck = cards;
+
+  // Set DOM to initial state
+  player1scoreEl.textContent = player1Deck.length;
+  player2scoreEl.textContent = player2Deck.length;
+  modalEl.classList.add("hidden");
+  player1CardEl.classList.remove("winning-card");
+  player2CardEl.classList.remove("winning-card");
+  player1CardEl.classList.add("hidden");
+  player2CardEl.classList.add("hidden");
+  gameWinner = 0;
 };
 
 deal();
@@ -37,23 +49,34 @@ let player1Card, player2Card;
 
 // Draw the top card from each player's deck
 const draw = function () {
-  // Remove winning card styling class
-  player1CardEl.classList.remove("winning-card");
-  player2CardEl.classList.remove("winning-card");
+  // Don't let this run if the game is not over
+  if (!gameWinner) {
+    // Remove winning card styling class
+    player1CardEl.classList.remove("winning-card");
+    player2CardEl.classList.remove("winning-card");
 
-  // Take the last (top) card from each player's deck
-  player1Card = player1Deck.pop();
-  player2Card = player2Deck.pop();
+    // Take the last (top) card from each player's deck
+    player1Card = player1Deck.pop();
+    player2Card = player2Deck.pop();
 
-  // Display each player's drawn card
-  player1CardEl.src = `Assets/card_${player1Card.value + player1Card.suit}.png`;
-  player2CardEl.src = `Assets/card_${player2Card.value + player2Card.suit}.png`;
+    // Display each player's drawn card
+    player1CardEl.src = `Assets/card_${
+      player1Card.value + player1Card.suit
+    }.png`;
+    player1CardEl.classList.remove("hidden");
+    player2CardEl.src = `Assets/card_${
+      player2Card.value + player2Card.suit
+    }.png`;
+    player2CardEl.classList.remove("hidden");
 
-  compare();
+    compare();
+  }
 };
 
 document.getElementById("player1-deck").addEventListener("click", draw);
 document.getElementById("player2-deck").addEventListener("click", draw);
+document.querySelector(".button-again").addEventListener("click", deal);
+document.querySelector(".button-restart").addEventListener("click", deal);
 
 // Compare the drawn cards, declare a winner if applicable, and put the cards in the appropriate deck(s)
 const compare = function () {
@@ -80,15 +103,17 @@ const compare = function () {
   }
 
   // Check for game winner (the other player has no cards left)
-  // for dev purposes, setting having < 21 cards left as a loss
-  if (player2Deck.length < 21) {
+  // for dev purposes, setting having < 23 cards left as a loss
+  if (player2Deck.length < 23) {
     gameWinner = 1;
     // Call a function to end the game and declare a winner
-    console.log("Player 1 wins!");
-  } else if (player1Deck.length < 21) {
+    modalEl.classList.remove("hidden");
+    winnerEl.textContent = "Player 1 wins!";
+  } else if (player1Deck.length < 23) {
     gameWinner = 2;
     // Call a function to end the game and declare a winner
-    console.log("Player 2 wins!");
+    modalEl.classList.remove("hidden");
+    winnerEl.textContent = "Player 2 wins!";
   }
 
   // Update player scores (number of elements in their deck array)
