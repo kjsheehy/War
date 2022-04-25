@@ -80,6 +80,7 @@ const compare = function () {
   }
 
   // Check for game winner (the other player has no cards left)
+  // for dev purposes, setting having < 21 cards left as a loss
   if (player2Deck.length < 21) {
     gameWinner = 1;
     // Call a function to end the game and declare a winner
