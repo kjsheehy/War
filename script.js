@@ -9,6 +9,10 @@ const player1scoreEl = document.getElementById("player1-score");
 const player2scoreEl = document.getElementById("player2-score");
 const gameOverModalEl = document.querySelector(".game-over-modal");
 const winnerEl = document.querySelector(".winner");
+const player1BountyEl = document.getElementById("player1-bounty");
+const player2BountyEl = document.getElementById("player2-bounty");
+const player1BountyCountEl = document.getElementById("player1-bounty-count");
+const player2BountyCountEl = document.getElementById("player2-bounty-count");
 
 const deal = function () {
   // Create standard deck as array of card objects
@@ -103,11 +107,14 @@ const compare = function () {
   }
 
   function war() {
-    //console.log("before splice", [...player1Deck]);
-    let player1Bounty = player1Deck.splice(-3);
-    let player2Bounty = player2Deck.splice(-3);
-    //console.log("splice", player1Bounty);
-    //console.log("after splice", [...player1Deck]);
+    let player1Bounty = player1Deck.splice(-3); //.unshift(player1Card);
+    let player2Bounty = player2Deck.splice(-3); //.unshift(player2Card);
+
+    player1BountyEl.classList.remove("hidden");
+    player2BountyEl.classList.remove("hidden");
+
+    player1BountyCountEl.textContent = player1Bounty.length;
+    player2BountyCountEl.textContent = player2Bounty.length;
   }
 
   // Check for game winner (the other player has no cards left)
