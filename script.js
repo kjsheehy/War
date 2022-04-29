@@ -7,7 +7,7 @@ const player1CardEl = document.getElementById("player1-card-played");
 const player2CardEl = document.getElementById("player2-card-played");
 const player1scoreEl = document.getElementById("player1-score");
 const player2scoreEl = document.getElementById("player2-score");
-const modalEl = document.querySelector(".modal");
+const gameOverModalEl = document.querySelector(".game-over-modal");
 const winnerEl = document.querySelector(".winner");
 
 const deal = function () {
@@ -35,7 +35,7 @@ const deal = function () {
   // Set DOM to initial state
   player1scoreEl.textContent = player1Deck.length;
   player2scoreEl.textContent = player2Deck.length;
-  modalEl.classList.add("hidden");
+  gameOverModalEl.classList.add("hidden");
   player1CardEl.classList.remove("winning-card");
   player2CardEl.classList.remove("winning-card");
   player1CardEl.classList.add("hidden");
@@ -96,23 +96,31 @@ const compare = function () {
     //console.log(player2Deck);
   } else {
     //console.log("The battle is a tie");
-
+    war();
     // For now, just put the cards back in each player's deck. Will add in the war logic later (probably with a modal).
     player1Deck.unshift(player1Card);
     player2Deck.unshift(player2Card);
   }
 
+  function war() {
+    //console.log("before splice", [...player1Deck]);
+    let player1Bounty = player1Deck.splice(-3);
+    let player2Bounty = player2Deck.splice(-3);
+    //console.log("splice", player1Bounty);
+    //console.log("after splice", [...player1Deck]);
+  }
+
   // Check for game winner (the other player has no cards left)
   // for dev purposes, setting having < 23 cards left as a loss
-  if (player2Deck.length < 23) {
+  if (player2Deck.length < 1) {
     gameWinner = 1;
     // Call a function to end the game and declare a winner
-    modalEl.classList.remove("hidden");
+    gameOverModalEl.classList.remove("hidden");
     winnerEl.textContent = "Player 1 wins!";
-  } else if (player1Deck.length < 23) {
+  } else if (player1Deck.length < 1) {
     gameWinner = 2;
     // Call a function to end the game and declare a winner
-    modalEl.classList.remove("hidden");
+    gameOverModalEl.classList.remove("hidden");
     winnerEl.textContent = "Player 2 wins!";
   }
 
