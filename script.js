@@ -1,6 +1,9 @@
 "use strict";
 
 let player1Deck, player2Deck, gameWinner;
+let currentWar = false;
+let player1Bounty = [];
+let player2Bounty = [];
 
 // Elements
 const player1CardEl = document.getElementById("player1-card-played");
@@ -13,6 +16,7 @@ const player1BountyEl = document.getElementById("player1-bounty");
 const player2BountyEl = document.getElementById("player2-bounty");
 const player1BountyCountEl = document.getElementById("player1-bounty-count");
 const player2BountyCountEl = document.getElementById("player2-bounty-count");
+const titleEl = document.querySelector(".title");
 
 const deal = function () {
   // Create standard deck as array of card objects
@@ -85,36 +89,42 @@ document.querySelector(".button-restart").addEventListener("click", deal);
 // Compare the drawn cards, declare a winner if applicable, and put the cards in the appropriate deck(s)
 const compare = function () {
   if (player1Card.value > player2Card.value) {
-    //console.log("Player 1 wins the battle");
     player1CardEl.classList.add("winning-card");
 
     // Add both cards to player 1's deck
     player1Deck.unshift(player2Card, player1Card);
-    //console.log(player1Deck);
   } else if (player1Card.value < player2Card.value) {
-    //console.log("Player 2 wins the battle");
     player2CardEl.classList.add("winning-card");
 
     // Add both cards to player 2's deck
     player2Deck.unshift(player1Card, player2Card);
-    //console.log(player2Deck);
   } else {
-    //console.log("The battle is a tie");
     war();
-    // For now, just put the cards back in each player's deck. Will add in the war logic later (probably with a modal).
-    player1Deck.unshift(player1Card);
-    player2Deck.unshift(player2Card);
   }
 
   function war() {
-    let player1Bounty = player1Deck.splice(-3); //.unshift(player1Card);
-    let player2Bounty = player2Deck.splice(-3); //.unshift(player2Card);
+    currentWar = true;
+    // Add to player bounties (empty unless war within war) the card played and the 3 cards from the top of the player's deck.
+    player1Bounty = player1Bounty.concat(
+      [player1Card].concat(player1Deck.splice(-3))
+    );
+    player2Bounty = player2Bounty.concat(
+      [player2Card].concat(player2Deck.splice(-3))
+    );
 
+    // Add class to style the title to indicate a war
+    titleEl.classList.add("war-title");
+    // Add an ! so that # of !s represents # of wars ongoing
+    titleEl.textContent += "!";
+
+    // Display the bounties
     player1BountyEl.classList.remove("hidden");
     player2BountyEl.classList.remove("hidden");
 
-    player1BountyCountEl.textContent = player1Bounty.length;
-    player2BountyCountEl.textContent = player2Bounty.length;
+    // Show the number of cards in each player's bounty (minus the played card still displayed)
+    player1BountyCountEl.textContent = player1Bounty.length - 1;
+    console.log(player2Bounty);
+    player2BountyCountEl.textContent = player2Bounty.length - 1;
   }
 
   // Check for game winner (the other player has no cards left)
