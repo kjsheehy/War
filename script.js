@@ -67,6 +67,7 @@ function deal() {
   gameWinner = 0;
   clearWar();
   clearWarStyling();
+  updateScores();
 }
 
 // Draw the top card from each player's deck
