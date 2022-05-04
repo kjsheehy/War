@@ -22,7 +22,7 @@ body {
 }
 
 .title {
-  margin-top: 20px;
+  margin-top: 5%;
   font-size: 60px;
 }
 
@@ -44,13 +44,14 @@ body {
 }
 
 .player-info {
-  margin-bottom: 20px;
+  margin-bottom: 5%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .deck {
+  padding: 5%;
   max-width: 100%;
   height: auto;
 }
@@ -80,6 +81,10 @@ body {
   padding: 5%;
   max-width: 100%;
   height: auto;
+}
+
+.transparent {
+  opacity: 0;
 }
 
 .bounty {
@@ -140,9 +145,21 @@ body {
 }
 
 @media (max-width: 600px) {
+  .container {
+    max-height: 100%;
+  }
+
+  .title {
+    font-size: 2em;
+  }
+
   .game {
     flex-wrap: wrap;
     justify-content: space-around;
+  }
+
+  .player-name {
+    font-size: 1em;
   }
 
   .player1-side {
@@ -163,7 +180,7 @@ body {
   }
 
   .deck {
-    max-width: 60%;
+    max-width: 70%;
     height: auto;
   }
 

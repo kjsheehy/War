@@ -62,8 +62,8 @@ function deal() {
   gameOverModalEl.classList.add("hidden");
   player1CardEl.classList.remove("winning-card");
   player2CardEl.classList.remove("winning-card");
-  player1CardEl.classList.add("hidden");
-  player2CardEl.classList.add("hidden");
+  player1CardEl.classList.add("transparent");
+  player2CardEl.classList.add("transparent");
   gameWinner = 0;
   clearWar();
   clearWarStyling();
@@ -88,11 +88,11 @@ function draw() {
     player1CardEl.src = `Assets/card_${
       player1Card.value + player1Card.suit
     }.png`;
-    player1CardEl.classList.remove("hidden");
+    player1CardEl.classList.remove("transparent");
     player2CardEl.src = `Assets/card_${
       player2Card.value + player2Card.suit
     }.png`;
-    player2CardEl.classList.remove("hidden");
+    player2CardEl.classList.remove("transparent");
 
     compare();
   }
