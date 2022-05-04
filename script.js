@@ -1,10 +1,11 @@
 "use strict";
 
-let player1Deck, player2Deck, gameWinner, player1Card, player2Card;
-let currentWar = false;
+// Variable declarations and initializations
+let player1Deck, player2Deck, gameWinner, player1Card, player2Card, currentWar;
 let player1Bounty = [];
 let player2Bounty = [];
 
+// DOM Elements
 const player1CardEl = document.getElementById("player1-card-played");
 const player2CardEl = document.getElementById("player2-card-played");
 const player1scoreEl = document.getElementById("player1-score");
@@ -17,14 +18,19 @@ const player1BountyCountEl = document.getElementById("player1-bounty-count");
 const player2BountyCountEl = document.getElementById("player2-bounty-count");
 const titleEl = document.querySelector(".title");
 
+// Activate clickables
 document.getElementById("player1-deck").addEventListener("click", draw);
 document.getElementById("player2-deck").addEventListener("click", draw);
 document.querySelector(".button-again").addEventListener("click", deal);
-document.querySelector(".button-restart").addEventListener("click", deal);
+document.querySelector(".button-reset").addEventListener("click", deal);
 
-// Start the game
+// Run the game
 deal();
 
+// Set up specific game scenarios to test:
+//testDeal();
+
+// All function declarations
 function deal() {
   // Create standard deck as array of card objects
   let cards = [];
@@ -56,6 +62,8 @@ function deal() {
   player1CardEl.classList.add("hidden");
   player2CardEl.classList.add("hidden");
   gameWinner = 0;
+  clearWar();
+  clearWarStyling();
 }
 
 // Draw the top card from each player's deck
@@ -66,12 +74,7 @@ function draw() {
     player1CardEl.classList.remove("winning-card");
     player2CardEl.classList.remove("winning-card");
 
-    if (!currentWar) {
-      player1BountyEl.classList.add("hidden");
-      player2BountyEl.classList.add("hidden");
-      titleEl.classList.remove("war-title");
-      titleEl.textContent = "War";
-    }
+    if (!currentWar) clearWarStyling();
 
     // Take the last (top) card from each player's deck
     player1Card = player1Deck.pop();
@@ -97,7 +100,7 @@ function compare() {
     player1CardEl.classList.add("winning-card");
     if (currentWar) {
       player1Deck = player2Bounty.concat(player1Bounty).concat(player1Deck);
-      endWar();
+      clearWar();
     }
     // Add both cards to player 1's deck
     player1Deck.unshift(player2Card, player1Card);
@@ -106,7 +109,7 @@ function compare() {
 
     if (currentWar) {
       player2Deck = player1Bounty.concat(player2Bounty).concat(player2Deck);
-      endWar();
+      clearWar();
     }
     // Add both cards to player 2's deck
     player2Deck.unshift(player1Card, player2Card);
@@ -114,11 +117,9 @@ function compare() {
     war();
   }
 
-  // Update player scores (number of elements in their deck array). In case of ongoing war, let the numbers remain for now.
-  if (!currentWar) {
-    player1scoreEl.textContent = `${player1Deck.length} cards`;
-    player2scoreEl.textContent = `${player2Deck.length} cards`;
-  }
+  // Update player scores (number of elements in their deck array). Note that in the case of a war, the totals won't add up to 52, and that's intentional as cards currently in a war belong to neither player.
+  player1scoreEl.textContent = `${player1Deck.length} cards`;
+  player2scoreEl.textContent = `${player2Deck.length} cards`;
 
   checkForWinner();
 }
@@ -136,14 +137,30 @@ function checkForWinner() {
 }
 
 function war() {
+  // Edge case handling:
+  // If a player has no more cards after the one that resulted in a draw, that player loses.
+  if (player1Deck.length === 0 || player2Deck.length === 0) checkForWinner();
+  // If a player cannot put up a 3-card war bounty AND have at least one left to decide the war winner, the bounty each player puts up shrinks to the maximum size that both players can put up.
+  let bountySize =
+    player1Deck.length < 4
+      ? player1Deck.length - 1
+      : player2Deck.length < 4
+      ? player2Deck.length - 1
+      : 3;
+
   currentWar = true;
   // Add to player bounties (empty unless war within war) the card played and the 3 cards from the top of the player's deck.
-  player1Bounty = player1Bounty.concat(
-    [player1Card].concat(player1Deck.splice(-3))
-  );
-  player2Bounty = player2Bounty.concat(
-    [player2Card].concat(player2Deck.splice(-3))
-  );
+
+  player1Bounty = bountySize
+    ? player1Bounty.concat(
+        [player1Card].concat(player1Deck.splice(-bountySize))
+      )
+    : [player1Card];
+  player2Bounty = bountySize
+    ? player2Bounty.concat(
+        [player2Card].concat(player2Deck.splice(-bountySize))
+      )
+    : [player2Card];
 
   // Add class to style the title to indicate a war
   titleEl.classList.add("war-title");
@@ -159,8 +176,44 @@ function war() {
   player2BountyCountEl.textContent = player2Bounty.length - 1;
 }
 
-function endWar() {
+function clearWar() {
   currentWar = false;
   player1Bounty = [];
   player2Bounty = [];
 }
+
+function clearWarStyling() {
+  player1BountyEl.classList.add("hidden");
+  player2BountyEl.classList.add("hidden");
+  titleEl.classList.remove("war-title");
+  titleEl.textContent = "War";
+}
+
+// Use the below function in place of deal to create game scenarios for testing
+// function testDeal() {
+//   player2Deck = [
+//     { value: 10, suit: "Hearts" },
+//     { value: 8, suit: "Hearts" },
+//   ];
+//   player1Deck = [
+//     { value: 7, suit: "Hearts" },
+//     { value: 7, suit: "Hearts" },
+//     { value: 7, suit: "Hearts" },
+//     { value: 7, suit: "Hearts" },
+//     { value: 7, suit: "Hearts" },
+//     { value: 7, suit: "Hearts" },
+//     { value: 7, suit: "Hearts" },
+//     { value: 8, suit: "Hearts" },
+//   ];
+
+//   player1scoreEl.textContent = player1Deck.length;
+//   player2scoreEl.textContent = player2Deck.length;
+//   gameOverModalEl.classList.add("hidden");
+//   player1CardEl.classList.remove("winning-card");
+//   player2CardEl.classList.remove("winning-card");
+//   player1CardEl.classList.add("hidden");
+//   player2CardEl.classList.add("hidden");
+//   gameWinner = 0;
+//   clearWarStyling();
+//   clearWar();
+// }
