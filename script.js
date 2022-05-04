@@ -1,11 +1,10 @@
 "use strict";
 
-let player1Deck, player2Deck, gameWinner;
+let player1Deck, player2Deck, gameWinner, player1Card, player2Card;
 let currentWar = false;
 let player1Bounty = [];
 let player2Bounty = [];
 
-// Elements
 const player1CardEl = document.getElementById("player1-card-played");
 const player2CardEl = document.getElementById("player2-card-played");
 const player1scoreEl = document.getElementById("player1-score");
@@ -18,7 +17,15 @@ const player1BountyCountEl = document.getElementById("player1-bounty-count");
 const player2BountyCountEl = document.getElementById("player2-bounty-count");
 const titleEl = document.querySelector(".title");
 
-const deal = function () {
+document.getElementById("player1-deck").addEventListener("click", draw);
+document.getElementById("player2-deck").addEventListener("click", draw);
+document.querySelector(".button-again").addEventListener("click", deal);
+document.querySelector(".button-restart").addEventListener("click", deal);
+
+// Start the game
+deal();
+
+function deal() {
   // Create standard deck as array of card objects
   let cards = [];
   for (let i = 2; i < 15; i++) {
@@ -49,14 +56,10 @@ const deal = function () {
   player1CardEl.classList.add("hidden");
   player2CardEl.classList.add("hidden");
   gameWinner = 0;
-};
-
-deal();
-
-let player1Card, player2Card;
+}
 
 // Draw the top card from each player's deck
-const draw = function () {
+function draw() {
   // Don't let this run if the game is over
   if (!gameWinner) {
     // Remove winning card styling class
@@ -86,15 +89,10 @@ const draw = function () {
 
     compare();
   }
-};
-
-document.getElementById("player1-deck").addEventListener("click", draw);
-document.getElementById("player2-deck").addEventListener("click", draw);
-document.querySelector(".button-again").addEventListener("click", deal);
-document.querySelector(".button-restart").addEventListener("click", deal);
+}
 
 // Compare the drawn cards, declare a winner if applicable, and put the cards in the appropriate deck(s)
-const compare = function () {
+function compare() {
   if (player1Card.value > player2Card.value) {
     player1CardEl.classList.add("winning-card");
     if (currentWar) {
@@ -116,24 +114,26 @@ const compare = function () {
     war();
   }
 
-  // Check for game winner (the other player has no cards left)
-  // for dev purposes, setting having < 23 cards left as a loss
+  // Update player scores (number of elements in their deck array). In case of ongoing war, let the numbers remain for now.
+  if (!currentWar) {
+    player1scoreEl.textContent = `${player1Deck.length} cards`;
+    player2scoreEl.textContent = `${player2Deck.length} cards`;
+  }
+
+  checkForWinner();
+}
+
+function checkForWinner() {
   if (player2Deck.length < 1) {
     gameWinner = 1;
-    // Call a function to end the game and declare a winner
     gameOverModalEl.classList.remove("hidden");
     winnerEl.textContent = "Player 1 wins!";
   } else if (player1Deck.length < 1) {
     gameWinner = 2;
-    // Call a function to end the game and declare a winner
     gameOverModalEl.classList.remove("hidden");
     winnerEl.textContent = "Player 2 wins!";
   }
-
-  // Update player scores (number of elements in their deck array)
-  player1scoreEl.textContent = `${player1Deck.length} cards`;
-  player2scoreEl.textContent = `${player2Deck.length} cards`;
-};
+}
 
 function war() {
   currentWar = true;
