@@ -18,7 +18,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 1200px;
+  width: 100%;
 }
 
 .title {
@@ -32,8 +32,15 @@ body {
 
 .game {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 100%;
+}
+
+.player-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 45%;
 }
 
 .player-info {
@@ -43,11 +50,17 @@ body {
   align-items: center;
 }
 
+.deck {
+  max-width: 100%;
+  height: auto;
+}
+
 .battle {
   border: 5px;
   border-color: black;
   border-style: double;
-  margin: 30px;
+  margin-top: 30px;
+  margin: 3%;
   justify-content: space-around;
   display: flex;
 }
@@ -59,19 +72,26 @@ body {
 }
 
 .card-played-container {
-  min-width: 274px;
+  display: flex;
+  justify-content: center;
 }
 
 .card-played {
-  padding: 20px;
+  padding: 5%;
+  max-width: 100%;
+  height: auto;
 }
 
 .bounty {
   position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5%;
 }
 
 .bounty img {
-  height: 100px;
+  max-width: 30%;
+  height: auto;
 }
 
 .bounty-count {
@@ -88,30 +108,23 @@ body {
   background-color: gold;
 }
 
-.button-new {
-  margin-top: 30px;
+.button-reset {
+  margin-top: 3%;
 }
 
-.war-modal {
-  position: absolute;
+.button-short-game {
+  margin: 3%;
+}
 
-  left: 50%;
-  width: 70%;
-  height: 50%;
-  transform: translate(-50%, 50%);
-
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
+.button-new {
+  margin: 10%;
 }
 
 .game-over-modal {
   position: absolute;
 
   left: 50%;
-  width: 70%;
+  width: 40%;
   height: 30%;
   transform: translate(-50%, 50%);
 
@@ -125,3 +138,41 @@ body {
 .hidden {
   display: none;
 }
+
+@media (max-width: 600px) {
+  .game {
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .player1-side {
+    order: 1;
+  }
+
+  .player2-side {
+    order: 2;
+  }
+
+  .battle {
+    justify-content: center;
+    order: 3;
+  }
+
+  .card-played-container {
+    min-width: none;
+  }
+
+  .deck {
+    max-width: 60%;
+    height: auto;
+  }
+
+  /* .bounty {
+    width: 20px;
+  } */
+
+  .card-played {
+    max-width: 100%;
+    height: auto;
+  }
+} ;
