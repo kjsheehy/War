@@ -23,6 +23,9 @@ document.getElementById("player1-deck").addEventListener("click", draw);
 document.getElementById("player2-deck").addEventListener("click", draw);
 document.querySelector(".button-again").addEventListener("click", deal);
 document.querySelector(".button-reset").addEventListener("click", deal);
+document
+  .querySelector(".button-short-game")
+  .addEventListener("click", shortGame);
 
 // Run the game
 deal();
@@ -117,9 +120,7 @@ function compare() {
     war();
   }
 
-  // Update player scores (number of elements in their deck array). Note that in the case of a war, the totals won't add up to 52, and that's intentional as cards currently in a war belong to neither player.
-  player1scoreEl.textContent = `${player1Deck.length} cards`;
-  player2scoreEl.textContent = `${player2Deck.length} cards`;
+  updateScores();
 
   checkForWinner();
 }
@@ -134,6 +135,12 @@ function checkForWinner() {
     gameOverModalEl.classList.remove("hidden");
     winnerEl.textContent = "Player 2 wins!";
   }
+}
+
+// Update player scores (number of elements in their deck array). Note that in the case of a war, the totals won't add up to 52, and that's intentional as cards currently in a war belong to neither player.
+function updateScores() {
+  player1scoreEl.textContent = `${player1Deck.length} cards`;
+  player2scoreEl.textContent = `${player2Deck.length} cards`;
 }
 
 function war() {
@@ -187,6 +194,13 @@ function clearWarStyling() {
   player2BountyEl.classList.add("hidden");
   titleEl.classList.remove("war-title");
   titleEl.textContent = "War";
+}
+
+function shortGame() {
+  deal();
+  player1Deck.splice(0, 21);
+  player2Deck.splice(0, 21);
+  updateScores();
 }
 
 // Use the below function in place of deal to create game scenarios for testing
