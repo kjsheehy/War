@@ -57,7 +57,7 @@ let player1Card, player2Card;
 
 // Draw the top card from each player's deck
 const draw = function () {
-  // Don't let this run if the game is not over
+  // Don't let this run if the game is over
   if (!gameWinner) {
     // Remove winning card styling class
     player1CardEl.classList.remove("winning-card");
@@ -90,41 +90,33 @@ document.querySelector(".button-restart").addEventListener("click", deal);
 const compare = function () {
   if (player1Card.value > player2Card.value) {
     player1CardEl.classList.add("winning-card");
+    if (currentWar) {
+      console.log("Player 1 deck before concats", player1Deck);
+      console.log("Player 2 bounty", player2Bounty);
+      console.log("Player 1 bounty", player1Bounty);
+      player1Deck = player2Bounty.concat(player1Bounty).concat(player1Deck);
+      console.log("Player 1 deck after concats", player1Deck);
 
+      currentWar = false;
+    }
     // Add both cards to player 1's deck
     player1Deck.unshift(player2Card, player1Card);
   } else if (player1Card.value < player2Card.value) {
     player2CardEl.classList.add("winning-card");
 
+    if (currentWar) {
+      console.log("Player 2 deck before concats", player2Deck);
+      console.log("Player 1 bounty", player1Bounty);
+      console.log("Player 2 bounty", player2Bounty);
+      player2Deck = player1Bounty.concat(player2Bounty).concat(player2Deck);
+      console.log("Player 2 deck after concats", player2Deck);
+
+      currentWar = false;
+    }
     // Add both cards to player 2's deck
     player2Deck.unshift(player1Card, player2Card);
   } else {
     war();
-  }
-
-  function war() {
-    currentWar = true;
-    // Add to player bounties (empty unless war within war) the card played and the 3 cards from the top of the player's deck.
-    player1Bounty = player1Bounty.concat(
-      [player1Card].concat(player1Deck.splice(-3))
-    );
-    player2Bounty = player2Bounty.concat(
-      [player2Card].concat(player2Deck.splice(-3))
-    );
-
-    // Add class to style the title to indicate a war
-    titleEl.classList.add("war-title");
-    // Add an ! so that # of !s represents # of wars ongoing
-    titleEl.textContent += "!";
-
-    // Display the bounties
-    player1BountyEl.classList.remove("hidden");
-    player2BountyEl.classList.remove("hidden");
-
-    // Show the number of cards in each player's bounty (minus the played card still displayed)
-    player1BountyCountEl.textContent = player1Bounty.length - 1;
-    console.log(player2Bounty);
-    player2BountyCountEl.textContent = player2Bounty.length - 1;
   }
 
   // Check for game winner (the other player has no cards left)
@@ -145,3 +137,27 @@ const compare = function () {
   player1scoreEl.textContent = `${player1Deck.length} cards`;
   player2scoreEl.textContent = `${player2Deck.length} cards`;
 };
+
+function war() {
+  currentWar = true;
+  // Add to player bounties (empty unless war within war) the card played and the 3 cards from the top of the player's deck.
+  player1Bounty = player1Bounty.concat(
+    [player1Card].concat(player1Deck.splice(-3))
+  );
+  player2Bounty = player2Bounty.concat(
+    [player2Card].concat(player2Deck.splice(-3))
+  );
+
+  // Add class to style the title to indicate a war
+  titleEl.classList.add("war-title");
+  // Add an ! so that # of !s represents # of wars ongoing
+  titleEl.textContent += "!";
+
+  // Display the bounties
+  player1BountyEl.classList.remove("hidden");
+  player2BountyEl.classList.remove("hidden");
+
+  // Show the number of cards in each player's bounty (minus the played card still displayed)
+  player1BountyCountEl.textContent = player1Bounty.length - 1;
+  player2BountyCountEl.textContent = player2Bounty.length - 1;
+}
