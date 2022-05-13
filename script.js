@@ -45,12 +45,15 @@ function deal() {
   }
 
   // Shuffle deck array using an optimized (to O(n)) version of Fisher-Yates
+  //console.log("before", cards.slice(0));
   for (let x = cards.length - 1; x >= 0; x--) {
     let index = Math.floor(Math.random() * x);
-    let temp = cards[x];
-    cards[x] = cards[index];
-    cards[index] = temp;
+    //let temp = cards[x];
+    //cards[x] = cards[index];
+    //cards[index] = temp;
+    [cards[x], cards[index]] = [cards[index], cards[x]];
   }
+  //console.log("after", cards.slice(0));
 
   // Split deck array between the 2 players
   player1Deck = cards.splice(0, 26);
