@@ -1,0 +1,14 @@
+{
+  "name": "war",
+  "version": "1.0.0",
+  "description": "A simple implementation of the card game War, created from scratch with JavaScript, HTML, and CSS for learning purposes.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kevin Sheehy",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
